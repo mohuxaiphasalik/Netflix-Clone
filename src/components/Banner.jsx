@@ -15,15 +15,14 @@ export default function Banner() {
 
   const img_base_url = "https://image.tmdb.org/t/p/original";
   React.useEffect(() => {
-    axios
-      .get(requests.fetchTopRated)
-      .then((res) =>
-        setMovie(
-          res.data.results[
-            Math.floor(Math.random() * res.data.results.length - 1)
-          ]
-        )
-      );
+    let random;
+    axios.get(requests.fetchActionMovies).then((res) => {
+      random = Math.floor(Math.random() * res.data.results.length - 1);
+      if (random === 0 || random === 16 || random === 10 || random === 19) {
+        random = 2;
+      }
+      return setMovie(res.data.results[random]);
+    });
   }, []);
   function handleBannerClick() {
     if (trailerURL) {
